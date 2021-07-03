@@ -11,7 +11,7 @@ app.set("view engine", "ejs");
 
 // database connection
 const dbURI =
-  "mongodb+srv://shaun:test1234@cluster0.del96.mongodb.net/node-auth";
+  "mongodb+srv://dilshan:dilshan@cluster0.xjbcs.mongodb.net/node-auth";
 mongoose
   .connect(dbURI, {
     useNewUrlParser: true,
@@ -20,6 +20,11 @@ mongoose
   })
   .then((result) => app.listen(3000))
   .catch((err) => console.log(err));
+
+const connection = mongoose.connection;
+connection.once("open", () => {
+  console.log("connection success");
+});
 
 // routes
 app.get("/", (req, res) => res.render("home"));
