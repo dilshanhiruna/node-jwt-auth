@@ -1,8 +1,6 @@
 const User = require("../models/Users");
 const jwt = require("jsonwebtoken");
 
-const JWT= process.env.JWT;
-
 //handle errors
 const handleErrors = (err) => {
   console.log(err.message, err.code);
@@ -33,7 +31,7 @@ const handleErrors = (err) => {
 const maxAge = 3 * 24 * 60 * 60;
 
 const createToken = (id) => {
-  return jwt.sign({ id }, JWT, {
+  return jwt.sign({ id }, process.env.JWT_KEY, {
     expiresIn: maxAge,
   });
 };
@@ -46,7 +44,6 @@ module.exports.login_get = (req, res) => {
 };
 module.exports.signup_post = async (req, res) => {
   const { email, password } = req.body;
-
   try {
     const user = await User.create({
       email,
