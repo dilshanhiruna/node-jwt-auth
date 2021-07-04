@@ -3,9 +3,10 @@ const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
 const cookieParser = require("cookie-parser");
 const { requireAuth } = require("./middleware/authMiddleware");
+const dotenv = require("dotenv");
 
 const app = express();
-
+require("dotenv").config();
 // middleware
 app.use(express.static("public"));
 app.use(express.json());
@@ -15,10 +16,10 @@ app.use(cookieParser());
 app.set("view engine", "ejs");
 
 // database connection
-const dbURI =
-  "mongodb+srv://dilshan:dilshan@cluster0.xjbcs.mongodb.net/node-auth";
+const URL= process.env.MONGODB_URL;
+
 mongoose
-  .connect(dbURI, {
+  .connect(URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
